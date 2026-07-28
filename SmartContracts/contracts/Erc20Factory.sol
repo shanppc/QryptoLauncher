@@ -76,4 +76,8 @@ contract Erc20Factory{
         return tokens.length;
       }
 
+      function getTokensByUser(address _user) public view returns(address[] memory) {
+        return tokensByUser[_user];
+      }
+
 }
