@@ -18,6 +18,10 @@ node_modules
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
 
+<<<<<<< HEAD
 /hardhat.config.js
+=======
+
+>>>>>>> 1c92a3e (init commit for dapp frontend)
 /package.json
 /package-lock.json
