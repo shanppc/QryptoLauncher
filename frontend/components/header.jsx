@@ -42,7 +42,7 @@ export function Header() {
     <header className="sticky top-0 z-20 border-b border-white/10 bg-[#0a0a0f]/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
         <Link href="/" className="text-lg font-semibold tracking-tight">
-          <span className="text-violet-400">Qrypto</span>Launcher
+          <img src="/logo.png" alt="QryptoLauncher" className="h-8" />
         </Link>
 
         <nav className="flex items-center gap-1 text-sm" aria-label="Main">
