@@ -1,17 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = { variable: "--font-geist-sans" };
+const geistMono = { variable: "--font-geist-mono" };
 
 export const metadata = {
   title: "Qrypto Launcher",
@@ -31,7 +23,7 @@ export default function RootLayout({ children }) {
             {children}
           </main>
           <footer className="border-t border-white/10 px-4 py-6 text-center text-sm text-zinc-500">
-            Qrypto Launcher — deploy on testnet at your own risk.
+            Qrypto Launcher is currently available on Sepolia testnet. Not financial or legal advice.
           </footer>
         </Providers>
       </body>
