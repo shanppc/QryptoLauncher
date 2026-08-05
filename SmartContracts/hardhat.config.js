@@ -19,6 +19,14 @@ module.exports = {
     },
   },
 
+    networks: {
+      base: {
+        url: `https://base-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
+        chainId: 8453,
+        accounts: [vars.get("PRIVATE_KEY")],
+      },
+    },
+
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },

@@ -9,7 +9,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { parseEventLogs, isAddress } from "viem";
+import { parseEventLogs, isAddress, formatEther } from "viem";
 import {
   erc721Factory,
   Erc721FactoryAbi,
@@ -444,6 +444,13 @@ export default function Erc721Page() {
                 className={inputClass}
               />
             </Field>
+
+            <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-sm">
+              <span className="text-zinc-400">Service Fee</span>
+              <span className="font-mono font-medium text-violet-300">
+                {fee !== undefined ? `${formatEther(fee)} ETH` : "Loading..."}
+              </span>
+            </div>
 
             <button
               type="submit"

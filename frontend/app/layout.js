@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             {children}
           </main>
           <footer className="border-t border-white/10 px-4 py-6 text-center text-sm text-zinc-500">
-            Qrypto Launcher is currently available on Sepolia testnet. Not financial or legal advice.
+            Qrypto Launcher is available on Base Mainnet and Sepolia Testnet. Not financial or legal advice.
           </footer>
         </Providers>
       </body>

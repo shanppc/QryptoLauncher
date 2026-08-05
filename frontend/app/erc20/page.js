@@ -8,7 +8,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { parseUnits, parseEventLogs } from "viem";
+import { parseUnits, parseEventLogs, formatEther } from "viem";
 import { erc20Factory, Erc20FactoryAbi } from "@/lib/contracts";
 import { parseContractError } from "@/lib/errors";
 import { SUPPORTED_CHAINS } from "@/lib/chains";
@@ -175,6 +175,13 @@ export default function Erc20Page() {
               className={inputClass}
             />
           </Field>
+
+          <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-sm">
+            <span className="text-zinc-400">Service Fee</span>
+            <span className="font-mono font-medium text-violet-300">
+              {fee !== undefined ? `${formatEther(fee)} ETH` : "Loading..."}
+            </span>
+          </div>
 
           <button
             type="submit"

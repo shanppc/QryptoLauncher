@@ -2,16 +2,16 @@ import Link from "next/link";
 
 const NETWORK_STATUS = [
   {
+    network: "Base Mainnet",
+    status: "Live now",
+    isAvailable: true,
+    copy: "Deploy production tokens and collections on Base Mainnet.",
+  },
+  {
     network: "Sepolia Testnet",
     status: "Available now",
     isAvailable: true,
     copy: "Use test ETH. Testnet assets have no real-world value.",
-  },
-  {
-    network: "Ethereum Mainnet",
-    status: "Planned",
-    isAvailable: false,
-    copy: "Mainnet support will be announced when it is ready.",
   },
 ];
 
@@ -40,7 +40,7 @@ const HOW_IT_WORKS = [
   {
     step: "01",
     title: "Connect your wallet",
-    copy: "Use MetaMask on the Sepolia testnet.",
+    copy: "Use MetaMask on Base Mainnet or Sepolia Testnet.",
   },
   {
     step: "02",
@@ -73,7 +73,7 @@ const FAQS = [
   },
   {
     question: "What do I need before launching?",
-    answer: "A browser wallet with MetaMask support and Sepolia test ETH.",
+    answer: "A browser wallet with MetaMask support and ETH on Base Mainnet or Sepolia Testnet.",
   },
   {
     question: "Who receives an ERC20 token's supply?",
@@ -88,7 +88,7 @@ const FAQS = [
   {
     question: "What will a deployment cost?",
     answer:
-      "Review the transaction cost shown in your wallet before confirming. Use test ETH while Sepolia is the supported network.",
+      "Review the transaction cost and service fee shown before confirming.",
   },
 ];
 
@@ -102,19 +102,18 @@ export default function Home() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
           </span>
-          Available on Sepolia testnet
+          Live on Base Mainnet &amp; Sepolia Testnet
         </div>
 
         <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-          Create, test, and prepare your{" "}
+          Create, test, and launch your{" "}
           <span className="bg-gradient-to-r from-violet-400 via-fuchsia-300 to-fuchsia-400 bg-clip-text text-transparent">
-            token launch.
+            tokens on Base.
           </span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">
           Create ERC20 tokens and ERC721 collections without writing Solidity.
-          Ethereum mainnet support is planned.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -122,7 +121,7 @@ export default function Home() {
             href="/erc20"
             className="rounded-lg bg-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/25 transition-all hover:bg-violet-500 hover:shadow-violet-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
-            Launch ERC20 on Sepolia
+            Launch ERC20 Token
           </Link>
           <Link
             href="/erc721"
@@ -133,7 +132,7 @@ export default function Home() {
         </div>
 
         <p className="mt-4 text-xs text-zinc-500">
-          You need MetaMask and Sepolia test ETH to deploy.
+          Supports Base Mainnet and Sepolia Testnet via MetaMask.
         </p>
       </section>
 
@@ -358,18 +357,17 @@ export default function Home() {
       {/* 8. Final CTA */}
       <section className="rounded-2xl border border-white/10 bg-gradient-to-r from-violet-950/40 via-violet-900/20 to-fuchsia-950/40 p-8 text-center sm:p-12">
         <h2 className="text-2xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
-          Ready to build on Sepolia?
+          Ready to launch your token?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-300 sm:text-base">
-          Connect MetaMask, use test ETH, and create your first token in a few
-          guided steps.
+          Connect MetaMask, select Base Mainnet or Sepolia Testnet, and create your token in a few guided steps.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/erc20"
             className="rounded-lg bg-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/25 transition-all hover:bg-violet-500 hover:shadow-violet-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
-            Launch ERC20 on Sepolia
+            Launch ERC20 Token
           </Link>
           <Link
             href="/erc721"
