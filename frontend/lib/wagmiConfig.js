@@ -1,12 +1,10 @@
-import { createConfig, http, cookieStorage, createStorage } from "wagmi";
-import { injected } from "wagmi/connectors";
-import { SUPPORTED_CHAINS } from "./chains";
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { base, sepolia } from "wagmi/chains";
 
-// MetaMask only, via the injected connector. No WalletConnect / RainbowKit.
-export const wagmiConfig = createConfig({
-  chains: SUPPORTED_CHAINS,
-  connectors: [injected({ target: "metaMask" })],
-  transports: Object.fromEntries(SUPPORTED_CHAINS.map((c) => [c.id, http()])),
+// RainbowKit + wagmi config supporting Base (default) and Sepolia
+export const wagmiConfig = getDefaultConfig({
+  appName: "Qrypto Launcher",
+  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID || "YOUR_PROJECT_ID",
+  chains: [base, sepolia],
   ssr: true,
-  storage: createStorage({ storage: cookieStorage }),
 });
