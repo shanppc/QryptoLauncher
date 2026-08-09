@@ -6,9 +6,10 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const NAV = [
   { href: "/", label: "Home" },
-  { href: "/erc20", label: "ERC20" },
-  { href: "/erc721", label: "ERC721" },
+  { href: "/launch-token", label: "ERC20" },
+  { href: "/launch-nft", label: "ERC721" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export function Header() {

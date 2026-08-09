@@ -1,4 +1,14 @@
 import Link from "next/link";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, DEFAULT_OG_IMAGE } from "@/lib/seo/constants";
+
+export const metadata = buildMetadata({
+  title: "QryptoLauncher — Create ERC20 Tokens and NFT Collections on Base",
+  description:
+    "Deploy ERC20 tokens and ERC721 NFT collections on Base without writing code. Connect your wallet, configure your contract, and launch onchain.",
+  path: "/",
+});
+
 
 const NETWORK_STATUS = [
   {
@@ -20,13 +30,13 @@ const CREATION_PATHS = [
     title: "Create an ERC20 token",
     copy: "Set a name, symbol, and initial supply. The full supply is minted to your connected wallet.",
     linkLabel: "Launch ERC20",
-    href: "/erc20",
+    href: "/launch-token",
   },
   {
     title: "Create an NFT collection",
     copy: "Add shared artwork, a description, and a maximum supply. Metadata is pinned to IPFS for your collection.",
     linkLabel: "Create ERC721",
-    href: "/erc721",
+    href: "/launch-nft",
   },
   {
     title: "Manage your launches",
@@ -95,6 +105,23 @@ const FAQS = [
 export default function Home() {
   return (
     <div className="flex flex-col gap-16 md:gap-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: SITE_NAME,
+            url: SITE_URL,
+            description: SITE_DESCRIPTION,
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Web",
+            image: DEFAULT_OG_IMAGE.url,
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+          }),
+        }}
+      />
       {/* 1. Hero */}
       <section className="mx-auto max-w-3xl pt-6 text-center md:pt-10">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-300">
@@ -118,13 +145,13 @@ export default function Home() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
-            href="/erc20"
+            href="/launch-token"
             className="rounded-lg bg-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/25 transition-all hover:bg-violet-500 hover:shadow-violet-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
             Launch ERC20 Token
           </Link>
           <Link
-            href="/erc721"
+            href="/launch-nft"
             className="rounded-lg border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-zinc-100 transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
             Create ERC721 collection
@@ -364,13 +391,13 @@ export default function Home() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
-            href="/erc20"
+            href="/launch-token"
             className="rounded-lg bg-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/25 transition-all hover:bg-violet-500 hover:shadow-violet-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
             Launch ERC20 Token
           </Link>
           <Link
-            href="/erc721"
+            href="/launch-token"
             className="text-sm font-semibold text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 px-3 py-2 rounded"
           >
             Create an NFT collection
