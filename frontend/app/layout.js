@@ -11,6 +11,8 @@ import {
   SOCIAL_LINKS,
 } from "@/lib/seo/constants";
 
+import {GoogleTagManager} from '@next/third-parties/google';
+
 const geistSans = { variable: "--font-geist-sans" };
 const geistMono = { variable: "--font-geist-mono" };
 
@@ -41,6 +43,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+    < GoogleTagManager gtmId="GTM-NP42X62B" />
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
