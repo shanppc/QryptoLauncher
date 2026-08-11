@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import {
   useAccount,
   useChainId,
@@ -13,6 +13,7 @@ import { erc20Factory, Erc20FactoryAbi } from "@/lib/contracts";
 import { parseContractError } from "@/lib/errors";
 import { SUPPORTED_CHAINS } from "@/lib/chains";
 import { Card, Field, StatusBanner, inputClass } from "@/components/ui";
+import { trackEvent } from "@/utils/track";
 
 const EMPTY = { name: "", symbol: "", supply: "" };
 
@@ -28,6 +29,17 @@ export default function Erc20Page() {
   const [phase, setPhase] = useState("idle");
   const [localError, setLocalError] = useState("");
   const [txHash, setTxHash] = useState(undefined);
+
+  // --- Tracking refs --------------------------------------------------------
+  // Fires token_form_started only once per form session (reset on new deploy).
+  const formStartedRef = useRef(false);
+  // Captures form.symbol before the form is cleared, so the success event
+  // always has the correct value even after setForm(EMPTY) runs.
+  const pendingSymbolRef = useRef("");
+  // Fires token_deployment_success only once per successful receipt.
+  const deploySuccessFiredRef = useRef(false);
+  // Fires token_deployment_failed (confirmation stage) only once per waitError.
+  const waitErrorFiredRef = useRef(false);
 
   // fee is fetched and sent as msg.value, but never displayed
   const { data: fee } = useReadContract({
@@ -83,10 +95,48 @@ export default function Erc20Page() {
     }
   }, [receipt]);
 
+  // --- token_deployment_success --------------------------------------------
+  useEffect(() => {
+    if (
+      receipt &&
+      receipt.status !== "reverted" &&
+      tokenAddress &&
+      !deploySuccessFiredRef.current
+    ) {
+      deploySuccessFiredRef.current = true;
+      trackEvent("token_deployment_success", {
+        token_symbol: pendingSymbolRef.current,
+        contract_address: tokenAddress,
+        tx_hash: receipt.transactionHash,
+      });
+    }
+  }, [receipt, tokenAddress]);
+
+  // --- token_deployment_failed (confirmation stage) ------------------------
+  useEffect(() => {
+    if (waitError && !waitErrorFiredRef.current) {
+      waitErrorFiredRef.current = true;
+      trackEvent("token_deployment_failed", {
+        error_reason: String(waitError?.message ?? waitError).slice(0, 200),
+        stage: "confirmation",
+      });
+    }
+  }, [waitError]);
+
   const busy = status === "signature" || status === "pending";
 
-  const update = (key) => (e) =>
+  // Wraps the existing update helper and fires token_form_started once.
+  function fireFormStarted() {
+    if (!formStartedRef.current) {
+      formStartedRef.current = true;
+      trackEvent("token_form_started");
+    }
+  }
+
+  const update = (key) => (e) => {
+    fireFormStarted();
     setForm((f) => ({ ...f, [key]: e.target.value }));
+  };
 
   function fail(msg) {
     setLocalError(msg);
@@ -96,6 +146,9 @@ export default function Erc20Page() {
   async function onSubmit(e) {
     e.preventDefault();
     setTxHash(undefined);
+    // Reset per-tx tracking guards for new attempt.
+    deploySuccessFiredRef.current = false;
+    waitErrorFiredRef.current = false;
 
     if (!contract) {
       fail("This network is not supported. Switch networks and retry.");
@@ -111,6 +164,8 @@ export default function Erc20Page() {
     const args = [form.name.trim(), form.symbol.trim(), parseUnits(supply, 18)];
 
     try {
+      // Snapshot symbol before the form is cleared.
+      pendingSymbolRef.current = form.symbol.trim();
       setPhase("signature");
       const hash = await writeContractAsync({
         ...contract,
@@ -122,7 +177,14 @@ export default function Erc20Page() {
       setTxHash(hash);
       setPhase("submitted");
       setForm(EMPTY);
+      // Allow token_form_started to fire again on next form session.
+      formStartedRef.current = false;
     } catch (err) {
+      // --- token_deployment_failed (signature stage) -----------------------
+      trackEvent("token_deployment_failed", {
+        error_reason: String(err?.message ?? err).slice(0, 200),
+        stage: "signature",
+      });
       fail(parseContractError(err));
     }
   }
@@ -143,6 +205,7 @@ export default function Erc20Page() {
               required
               value={form.name}
               onChange={update("name")}
+              onFocus={fireFormStarted}
               disabled={busy}
               placeholder="My Token"
               className={inputClass}
@@ -154,6 +217,7 @@ export default function Erc20Page() {
               required
               value={form.symbol}
               onChange={update("symbol")}
+              onFocus={fireFormStarted}
               disabled={busy}
               placeholder="MTK"
               maxLength={11}
@@ -170,6 +234,7 @@ export default function Erc20Page() {
               inputMode="decimal"
               value={form.supply}
               onChange={update("supply")}
+              onFocus={fireFormStarted}
               disabled={busy}
               placeholder="1000000"
               className={inputClass}

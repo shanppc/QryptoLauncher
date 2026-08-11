@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import {
   useAccount,
   useChainId,
@@ -19,6 +19,7 @@ import { parseContractError } from "@/lib/errors";
 import { SUPPORTED_CHAINS } from "@/lib/chains";
 import { uploadImage, uploadMetadataFolder } from "@/lib/pinata";
 import { Card, Field, StatusBanner, inputClass } from "@/components/ui";
+import { trackEvent } from "@/utils/track";
 
 const EMPTY_DEPLOY = { name: "", symbol: "", maxSupply: "", description: "" };
 const MAX_SUPPLY_LIMIT = 5000;
@@ -41,6 +42,17 @@ export default function Erc721Page() {
   const [uploadStep, setUploadStep] = useState("");
   const [deployLocalError, setDeployLocalError] = useState("");
   const [deployTxHash, setDeployTxHash] = useState(undefined);
+
+  // --- NFT tracking refs ---------------------------------------------------
+  // Fires nft_form_started only once per form session.
+  const nftFormStartedRef = useRef(false);
+  // Captures deployForm.name before the form is cleared so the success event
+  // always has the correct value even after setDeployForm(EMPTY_DEPLOY) runs.
+  const pendingCollectionNameRef = useRef("");
+  // Fires nft_deployment_success only once per successful receipt.
+  const nftSuccessFiredRef = useRef(false);
+  // Fires nft_deployment_failed (confirmation) only once per waitError.
+  const nftWaitErrorFiredRef = useRef(false);
 
   // ---- MINT NFT STATE ------------------------------------------------------
   const [mintCollectionAddress, setMintCollectionAddress] = useState("");
@@ -133,8 +145,48 @@ export default function Erc721Page() {
     deployStatus === "signature" ||
     deployStatus === "pending";
 
-  const updateDeploy = (key) => (e) =>
+  // --- nft_deployment_success ----------------------------------------------
+  useEffect(() => {
+    if (
+      deployReceipt &&
+      deployReceipt.status !== "reverted" &&
+      deployedCollectionAddress &&
+      !nftSuccessFiredRef.current
+    ) {
+      nftSuccessFiredRef.current = true;
+      trackEvent("nft_deployment_success", {
+        collection_name: pendingCollectionNameRef.current,
+        contract_address: deployedCollectionAddress,
+        tx_hash: deployReceipt.transactionHash,
+      });
+    }
+  }, [deployReceipt, deployedCollectionAddress]);
+
+  // --- nft_deployment_failed (confirmation stage) --------------------------
+  useEffect(() => {
+    if (deployWaitError && !nftWaitErrorFiredRef.current) {
+      nftWaitErrorFiredRef.current = true;
+      trackEvent("nft_deployment_failed", {
+        error_reason: String(
+          deployWaitError?.message ?? deployWaitError
+        ).slice(0, 200),
+        stage: "confirmation",
+      });
+    }
+  }, [deployWaitError]);
+
+  // Fires nft_form_started once on first field interaction per session.
+  function fireNftFormStarted() {
+    if (!nftFormStartedRef.current) {
+      nftFormStartedRef.current = true;
+      trackEvent("nft_form_started");
+    }
+  }
+
+  const updateDeploy = (key) => (e) => {
+    fireNftFormStarted();
     setDeployForm((f) => ({ ...f, [key]: e.target.value }));
+  };
 
   function failDeploy(msg) {
     setDeployLocalError(msg);
@@ -144,6 +196,9 @@ export default function Erc721Page() {
   async function onDeploySubmit(e) {
     e.preventDefault();
     setDeployTxHash(undefined);
+    // Reset per-tx tracking guards for new attempt.
+    nftSuccessFiredRef.current = false;
+    nftWaitErrorFiredRef.current = false;
 
     if (!contract) {
       failDeploy("This network is not supported. Switch networks and retry.");
@@ -171,6 +226,8 @@ export default function Erc721Page() {
     const description = deployForm.description.trim();
 
     try {
+      // Snapshot collection name before the form is cleared.
+      pendingCollectionNameRef.current = deployForm.name.trim();
       setDeployPhase("uploading");
       setUploadStep("Uploading image to IPFS...");
       const imageCid = await uploadImage(image);
@@ -200,7 +257,14 @@ export default function Erc721Page() {
       setDeployPhase("submitted");
       setDeployForm(EMPTY_DEPLOY);
       setImage(null);
+      // Allow nft_form_started to fire again on next form session.
+      nftFormStartedRef.current = false;
     } catch (err) {
+      // --- nft_deployment_failed (signature stage) ------------------------
+      trackEvent("nft_deployment_failed", {
+        error_reason: String(err?.message ?? err).slice(0, 200),
+        stage: "signature",
+      });
       failDeploy(parseContractError(err));
     }
   }
@@ -389,6 +453,7 @@ export default function Erc721Page() {
                 required
                 value={deployForm.name}
                 onChange={updateDeploy("name")}
+                onFocus={fireNftFormStarted}
                 disabled={deployBusy}
                 placeholder="My Collection"
                 className={inputClass}
@@ -400,6 +465,7 @@ export default function Erc721Page() {
                 required
                 value={deployForm.symbol}
                 onChange={updateDeploy("symbol")}
+                onFocus={fireNftFormStarted}
                 disabled={deployBusy}
                 placeholder="MYC"
                 maxLength={11}
@@ -416,6 +482,7 @@ export default function Erc721Page() {
                 inputMode="numeric"
                 value={deployForm.maxSupply}
                 onChange={updateDeploy("maxSupply")}
+                onFocus={fireNftFormStarted}
                 disabled={deployBusy}
                 placeholder="100"
                 className={inputClass}
@@ -428,7 +495,11 @@ export default function Erc721Page() {
                 type="file"
                 accept="image/*"
                 disabled={deployBusy}
-                onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+                onChange={(e) => {
+                  fireNftFormStarted();
+                  setImage(e.target.files?.[0] ?? null);
+                }}
+                onFocus={fireNftFormStarted}
                 className="w-full cursor-pointer rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-zinc-300 file:mr-3 file:rounded-md file:border-0 file:bg-violet-600 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-white hover:file:bg-violet-500 disabled:opacity-50"
               />
             </Field>
@@ -439,6 +510,7 @@ export default function Erc721Page() {
                 rows={3}
                 value={deployForm.description}
                 onChange={updateDeploy("description")}
+                onFocus={fireNftFormStarted}
                 disabled={deployBusy}
                 placeholder="What is this collection about?"
                 className={inputClass}
