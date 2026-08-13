@@ -9,8 +9,8 @@ import { blogPosts } from "./blog/posts";
 export default function sitemap() {
   const staticRoutes = [
     { path: "/", changeFrequency: "weekly", priority: 1.0 },
-    { path: "/erc20", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/erc721", changeFrequency: "monthly", priority: 0.9 },
+    { path: "/launch-token", changeFrequency: "monthly", priority: 0.9 },
+    { path: "/launch-nft", changeFrequency: "monthly", priority: 0.9 },
     { path: "/dashboard", changeFrequency: "monthly", priority: 0.6 },
     { path: "/about", changeFrequency: "monthly", priority: 0.7 },
     { path: "/faq", changeFrequency: "monthly", priority: 0.7 },
