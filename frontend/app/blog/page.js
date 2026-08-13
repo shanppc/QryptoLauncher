@@ -1,5 +1,4 @@
 // app/blog/page.js
-
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { blogPosts } from "./posts";
@@ -19,7 +18,6 @@ export default function BlogIndexPage() {
         Guides and notes on deploying tokens and NFT collections on Base,
         onchain metadata, and building safely with no-code tools.
       </p>
-
       <div className="space-y-10">
         {blogPosts.map((post) => (
           <article key={post.slug} className="border-b border-slate-800 pb-8">

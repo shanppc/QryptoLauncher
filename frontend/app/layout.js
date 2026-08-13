@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
               "@type": "Organization",
               name: SITE_NAME,
               url: SITE_URL,
-              logo: `${SITE_URL}/icon.png`,
+              logo: `${SITE_URL}/logo.png`,
               description:
                 "QryptoLauncher is a non-custodial, no-code platform for deploying ERC20 tokens and ERC721 NFT collections on Base.",
               ...(SOCIAL_LINKS.length ? { sameAs: SOCIAL_LINKS } : {}),
