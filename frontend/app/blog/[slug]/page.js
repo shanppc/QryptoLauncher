@@ -50,10 +50,13 @@ function ContentBlock({ block, index }) {
       );
     case "paragraph":
     default:
+      // FIX: Render HTML directly and add Tailwind styling for nested <a> tags
       return (
-        <p key={index} className="text-slate-300 leading-relaxed mb-5">
-          {block.text}
-        </p>
+        <p 
+          key={index} 
+          className="text-slate-300 leading-relaxed mb-5 [&_a]:text-blue-400 [&_a]:underline hover:[&_a]:text-blue-300"
+          dangerouslySetInnerHTML={{ __html: block.text }}
+        />
       );
   }
 }
@@ -105,7 +108,6 @@ export default async function BlogPostPage({ params }) {
           <ContentBlock key={index} block={block} index={index} />
         ))}
       </article>
-
 
     </main>
   );
