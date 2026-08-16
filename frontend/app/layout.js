@@ -35,6 +35,10 @@ export const metadata = {
     card: "summary_large_image",
     site: TWITTER_HANDLE,
   },
+
+    other: {
+    'base:app_id': '6a7560f885896ee8433312dc',
+  },
 };
 
 export default function RootLayout({ children }) {
