@@ -115,19 +115,6 @@ export default function DashboardPage() {
   const explorerUrl = chain?.blockExplorers?.default?.url;
   const supported = Boolean(factory20 && factory721);
 
-  // ---- totals -------------------------------------------------------------
-  const { data: total20, isLoading: loadingTotal20 } = useReadContract({
-    ...factory20,
-    functionName: "totalTokensDeployed",
-    query: { enabled: supported },
-  });
-
-  const { data: allCollections, isLoading: loadingTotal721 } = useReadContract({
-    ...factory721,
-    functionName: "getAllCollections",
-    query: { enabled: supported },
-  });
-
   // ---- the user's deployments --------------------------------------------
   const { data: myTokens, isLoading: loadingMyTokens } = useReadContract({
     ...factory20,
@@ -219,14 +206,26 @@ export default function DashboardPage() {
 
       <section className="grid gap-4 sm:grid-cols-2">
         <Stat
-          label="Total ERC20 deployed"
-          value={total20 === undefined ? undefined : String(total20)}
-          loading={loadingTotal20}
+          label="My ERC20 tokens"
+          value={
+            !isConnected
+              ? "—"
+              : myTokens === undefined
+              ? undefined
+              : String(myTokens.length)
+          }
+          loading={isConnected && loadingMyTokens}
         />
         <Stat
-          label="Total ERC721 deployed"
-          value={allCollections ? String(allCollections.length) : undefined}
-          loading={loadingTotal721}
+          label="My NFT collections"
+          value={
+            !isConnected
+              ? "—"
+              : myCollections === undefined
+              ? undefined
+              : String(myCollections.length)
+          }
+          loading={isConnected && loadingMyCollections}
         />
       </section>
 

@@ -14,6 +14,7 @@ import { parseContractError } from "@/lib/errors";
 import { SUPPORTED_CHAINS } from "@/lib/chains";
 import { Card, Field, StatusBanner, inputClass } from "@/components/ui";
 import { trackEvent } from "@/utils/track";
+import { useEthPrice } from "@/hooks/useEthPrice";
 
 const EMPTY = { name: "", symbol: "", supply: "" };
 
@@ -23,6 +24,7 @@ export default function Erc20Page() {
   const contract = erc20Factory(chainId);
   const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId);
   const explorerUrl = chain?.blockExplorers?.default?.url;
+  const { ethUsd } = useEthPrice();
 
   const [form, setForm] = useState(EMPTY);
   // what the user initiated: idle | signature | submitted | error
@@ -244,7 +246,18 @@ export default function Erc20Page() {
           <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-sm">
             <span className="text-zinc-400">Service Fee</span>
             <span className="font-mono font-medium text-violet-300">
-              {fee !== undefined ? `${formatEther(fee)} ETH` : "Loading..."}
+              {fee !== undefined ? (
+                <>
+                  {formatEther(fee)} ETH
+                  {ethUsd !== null && (
+                    <span className="ml-2 text-xs text-zinc-400">
+                      (≈ ${(Number(formatEther(fee)) * ethUsd).toFixed(2)} USD)
+                    </span>
+                  )}
+                </>
+              ) : (
+                "Loading..."
+              )}
             </span>
           </div>
 

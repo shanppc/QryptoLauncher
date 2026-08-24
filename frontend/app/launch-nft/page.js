@@ -20,6 +20,7 @@ import { SUPPORTED_CHAINS } from "@/lib/chains";
 import { uploadImage, uploadMetadataFolder } from "@/lib/pinata";
 import { Card, Field, StatusBanner, inputClass } from "@/components/ui";
 import { trackEvent } from "@/utils/track";
+import { useEthPrice } from "@/hooks/useEthPrice";
 
 const EMPTY_DEPLOY = { name: "", symbol: "", maxSupply: "", description: "" };
 const MAX_SUPPLY_LIMIT = 5000;
@@ -30,6 +31,7 @@ export default function Erc721Page() {
   const contract = erc721Factory(chainId);
   const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId);
   const explorerUrl = chain?.blockExplorers?.default?.url;
+  const { ethUsd } = useEthPrice();
 
   // Active Tab: "deploy" | "mint"
   const [activeTab, setActiveTab] = useState("deploy");
@@ -520,7 +522,18 @@ export default function Erc721Page() {
             <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-sm">
               <span className="text-zinc-400">Service Fee</span>
               <span className="font-mono font-medium text-violet-300">
-                {fee !== undefined ? `${formatEther(fee)} ETH` : "Loading..."}
+                {fee !== undefined ? (
+                  <>
+                    {formatEther(fee)} ETH
+                    {ethUsd !== null && (
+                      <span className="ml-2 text-xs text-zinc-400">
+                        (≈ ${(Number(formatEther(fee)) * ethUsd).toFixed(2)} USD)
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  "Loading..."
+                )}
               </span>
             </div>
 
