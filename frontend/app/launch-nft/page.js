@@ -20,6 +20,7 @@ import { SUPPORTED_CHAINS } from "@/lib/chains";
 import { uploadImage, uploadMetadataFolder } from "@/lib/pinata";
 import { Card, Field, StatusBanner, inputClass } from "@/components/ui";
 import { trackEvent } from "@/utils/track";
+import { appendBuilderSuffix } from "@/utils/baseBuilder";
 import { useEthPrice } from "@/hooks/useEthPrice";
 
 const EMPTY_DEPLOY = { name: "", symbol: "", maxSupply: "", description: "" };
@@ -248,11 +249,14 @@ export default function Erc721Page() {
       const baseURI = `ipfs://${folderCid}/`;
 
       setDeployPhase("signature");
+      // Append ERC-8021 Base Builder attribution suffix before signing.
+      const deployDataSuffix = appendBuilderSuffix("", chainId);
       const hash = await writeDeployContract({
         ...contract,
         functionName: "createCollection",
         args: [name, symbol, baseURI, BigInt(max)],
         value: fee ?? 0n,
+        dataSuffix: deployDataSuffix,
       });
 
       setDeployTxHash(hash);
@@ -391,11 +395,14 @@ export default function Erc721Page() {
 
     try {
       setMintPhase("signature");
+      // Append ERC-8021 Base Builder attribution suffix before signing.
+      const mintDataSuffix = appendBuilderSuffix("", chainId);
       const hash = await writeMintContract({
         address: validMintAddress,
         abi: Erc721TokenAbi,
         functionName: "mint",
         args: [mintRecipient],
+        dataSuffix: mintDataSuffix,
       });
 
       setMintTxHash(hash);

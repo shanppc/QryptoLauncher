@@ -14,6 +14,7 @@ import { parseContractError } from "@/lib/errors";
 import { SUPPORTED_CHAINS } from "@/lib/chains";
 import { Card, Field, StatusBanner, inputClass } from "@/components/ui";
 import { trackEvent } from "@/utils/track";
+import { appendBuilderSuffix } from "@/utils/baseBuilder";
 import { useEthPrice } from "@/hooks/useEthPrice";
 
 const EMPTY = { name: "", symbol: "", supply: "" };
@@ -169,11 +170,14 @@ export default function Erc20Page() {
       // Snapshot symbol before the form is cleared.
       pendingSymbolRef.current = form.symbol.trim();
       setPhase("signature");
+      // Append ERC-8021 Base Builder attribution suffix before signing.
+      const dataSuffix = appendBuilderSuffix("", chainId);
       const hash = await writeContractAsync({
         ...contract,
         functionName: "createToken",
         args,
         value: fee ?? 0n,
+        dataSuffix,
       });
 
       setTxHash(hash);
