@@ -4,7 +4,7 @@
 // Docs: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
 
 import { SITE_URL } from "@/lib/seo/constants";
-import { blogPosts } from "./blog/posts";
+import { blogPosts } from "@/app/(site)/blog/posts";
 
 export default function sitemap() {
   const staticRoutes = [

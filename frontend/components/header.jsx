@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -12,14 +11,14 @@ const NAV = [
   { href: "/blog", label: "Blog" },
 ];
 
-export function Header() {
+export function Header({ rightElement }) {
   const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-20 border-b border-white/10 bg-[#0a0a0f]/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
         <Link href="/" className="text-lg font-semibold tracking-tight">
-          <img src="/logo.png" alt="QryptoLauncher" className="h-8" />
+          <img src="/logo.webp" alt="QryptoLauncher" className="h-8" />
         </Link>
 
         <nav className="flex items-center gap-1 text-sm" aria-label="Main">
@@ -42,19 +41,13 @@ export function Header() {
           })}
         </nav>
 
-        {/*
-          ConnectButton handles the whole wallet flow: connect modal, account
-          menu, chain switcher, and the "Wrong network" state. It replaces the
-          previous custom connect button + network <select>.
-        */}
-        <div className="ml-auto flex items-center gap-2">
-          <ConnectButton
-            showBalance={false}
-            chainStatus="icon"
-            accountStatus={{ smallScreen: "avatar", largeScreen: "full" }}
-          />
-        </div>
+        {rightElement ? (
+          <div className="ml-auto flex items-center gap-2">
+            {rightElement}
+          </div>
+        ) : null}
       </div>
     </header>
   );
 }
+
