@@ -39,7 +39,7 @@ QryptoLauncher addresses these challenges by offering a self-serve, non-custodia
 - **Zero Solidity Required**: Standardized, battle-tested OpenZeppelin ERC20 and ERC721 contracts are deployed via factory contracts in a single transaction.
 - **Self-Custodial Deployment**: 100% of the token supply and contract ownership are minted directly to the creator's wallet upon deployment.
 - **Automated IPFS Pinning**: Integrated Pinata service automatically uploads collection media assets and generates standards-compliant ERC721 metadata folders.
-- **Multi-Chain Support**: Native support for **Base Mainnet** and **Sepolia Testnet** with real-time network switching, transparent service fee displays, and automated block explorer integration.
+- **Multi-Chain Support**: Native support for **Base Mainnet**, **Arc Mainnet**, and **Sepolia Testnet** with real-time network switching, transparent service fee displays, and automated block explorer integration.
 
 ---
 
@@ -69,7 +69,7 @@ QryptoLauncher addresses these challenges by offering a self-serve, non-custodia
 
 ## Deployed Smart Contracts
 
-The factory contracts are deployed and verified on both Base Mainnet and Sepolia Testnet.
+The factory contracts are deployed and verified on Base Mainnet, Arc Mainnet, and Sepolia Testnet.
 
 ### Base Mainnet (Chain ID: `8453`)
 
@@ -84,6 +84,13 @@ The factory contracts are deployed and verified on both Base Mainnet and Sepolia
 | :--- | :--- | :--- |
 | **ERC20 Factory** | `0xd809A03876fe8c10f1dB5FD0bf0C80B4eD873389` | [Etherscan](https://sepolia.etherscan.io/address/0xd809A03876fe8c10f1dB5FD0bf0C80B4eD873389) |
 | **ERC721 Factory** | `0x895C7F82587c63942a973bf1e4c3a998aF1040f3` | [Etherscan](https://sepolia.etherscan.io/address/0x895C7F82587c63942a973bf1e4c3a998aF1040f3) |
+
+### Arc Mainnet (Chain ID: `5042`)
+
+| Contract | Address | Explorer |
+| :--- | :--- | :--- |
+| **ERC20 Factory** | `0x621d12fbE73F1191bcE098fECcc6330ab931E563` | [Arc Explorer](https://explorer.arc.io/address/0x621d12fbE73F1191bcE098fECcc6330ab931E563) |
+| **ERC721 Factory** | `0x9Bf6F548632803ec2C0944f45E1671e50925dA2A` | [Arc Explorer](https://explorer.arc.io/address/0x9Bf6F548632803ec2C0944f45E1671e50925dA2A) |
 
 ---
 
@@ -103,11 +110,11 @@ The factory contracts are deployed and verified on both Base Mainnet and Sepolia
 
 ### 3. Analytics & Portfolio Dashboard
 - Real-time indexing of all user-deployed tokens and collections using multicall factory queries.
-- Direct links to contracts on Basescan and Etherscan.
+- Direct links to contracts on Basescan, Etherscan, and Arc Explorer.
 - Display of total token supplies, total minted NFTs, and token balances.
 
 ### 4. Multi-Network Selector
-- Seamless network switching between Base Mainnet and Sepolia Testnet in the top navigation header.
+- Seamless network switching between Base Mainnet, Arc Mainnet, and Sepolia Testnet in the top navigation header.
 - Dynamic network status badges and contextual safety notifications.
 
 ---

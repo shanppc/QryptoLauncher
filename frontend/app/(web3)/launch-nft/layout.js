@@ -2,9 +2,9 @@
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 export const metadata = buildMetadata({
-  title: "Create ERC721 NFT Collection on Base — QryptoLauncher",
+  title: "Create ERC721 NFT Collection on Base & Arc — QryptoLauncher",
   description:
-    "Deploy custom ERC721 NFT collections on Base. Automatic artwork and metadata pinning to IPFS with full ownership control.",
+    "Deploy custom ERC721 NFT collections on Base and Arc. Automatic artwork and metadata pinning to IPFS with full ownership control.",
   path: "/erc721",
 });
 

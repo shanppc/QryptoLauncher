@@ -6,7 +6,7 @@
 
 export const SITE_URL = "https://www.qryptolauncher.com";
 export const SITE_NAME = "QryptoLauncher";
-export const SITE_DESCRIPTION = "Deploy ERC20 tokens and ERC721 NFT collections on Base without writing code. Connect your wallet, configure your contract, and launch onchain.";
+export const SITE_DESCRIPTION = "Deploy ERC20 tokens and ERC721 NFT collections on Base and Arc without writing code. Connect your wallet, configure your contract, and launch onchain.";
 
 // Update once you have real social accounts / a designed logo file.
 export const SOCIAL_LINKS = [
@@ -18,7 +18,7 @@ export const DEFAULT_OG_IMAGE = {
   url: `${SITE_URL}/opengraph-image`,
   width: 1200,
   height: 630,
-  alt: `${SITE_NAME} — Create ERC20 Tokens and NFT Collections on Base`,
+  alt: `${SITE_NAME} — Create ERC20 Tokens and NFT Collections on Base & Arc`,
 };
 
 export const TWITTER_HANDLE = "@qryptolauncher"; 

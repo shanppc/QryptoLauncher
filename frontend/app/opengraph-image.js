@@ -6,7 +6,7 @@
 
 import { ImageResponse } from "next/og";
 
-export const alt = "QryptoLauncher — Create ERC20 Tokens and NFT Collections on Base";
+export const alt = "QryptoLauncher — Create ERC20 Tokens and NFT Collections on Base & Arc";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -63,7 +63,7 @@ export default function OpengraphImage() {
             maxWidth: 980,
           }}
         >
-          Launch Tokens and NFT Collections on Base
+          Launch Tokens and NFT Collections on Base &amp; Arc
         </div>
         <div
           style={{

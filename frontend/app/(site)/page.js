@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, DEFAULT_OG_IMAGE } from "@/lib/seo/constants";
+import { SUPPORTED_NETWORKS_LABEL } from "@/lib/chains";
 
 export const metadata = buildMetadata({
-  title: "QryptoLauncher — Create ERC20 Tokens and NFT Collections on Base",
+  title: "QryptoLauncher — Create ERC20 Tokens and NFT Collections on Base & Arc",
   description:
-    "Deploy ERC20 tokens and ERC721 NFT collections on Base without writing code. Connect your wallet, configure your contract, and launch onchain.",
+    "Deploy ERC20 tokens and ERC721 NFT collections on Base and Arc without writing code. Connect your wallet, configure your contract, and launch onchain.",
   path: "/",
 });
 
@@ -22,6 +23,12 @@ const NETWORK_STATUS = [
     status: "Available now",
     isAvailable: true,
     copy: "Use test ETH. Testnet assets have no real-world value.",
+  },
+  {
+    network: "Arc Mainnet",
+    status: "Live now",
+    isAvailable: true,
+    copy: "Deploy production tokens and collections on Arc Mainnet.",
   },
 ];
 
@@ -50,7 +57,7 @@ const HOW_IT_WORKS = [
   {
     step: "01",
     title: "Connect your wallet",
-    copy: "Use MetaMask on Base Mainnet or Sepolia Testnet.",
+    copy: `Use MetaMask on ${SUPPORTED_NETWORKS_LABEL}.`,
   },
   {
     step: "02",
@@ -83,7 +90,7 @@ const FAQS = [
   },
   {
     question: "What do I need before launching?",
-    answer: "A browser wallet with MetaMask support and ETH on Base Mainnet or Sepolia Testnet.",
+    answer: `A browser wallet with MetaMask support and native gas on ${SUPPORTED_NETWORKS_LABEL}.`,
   },
   {
     question: "Who receives an ERC20 token's supply?",
@@ -129,13 +136,13 @@ export default function Home() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
           </span>
-          Live on Base Mainnet &amp; Sepolia Testnet
+          Live on Base, Arc &amp; Sepolia
         </div>
 
         <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
           Create, test, and launch your{" "}
           <span className="bg-gradient-to-r from-violet-400 via-fuchsia-300 to-fuchsia-400 bg-clip-text text-transparent">
-            tokens on Base.
+            tokens on Base &amp; Arc.
           </span>
         </h1>
 
@@ -159,7 +166,7 @@ export default function Home() {
         </div>
 
         <p className="mt-4 text-xs text-zinc-500">
-          Supports Base Mainnet and Sepolia Testnet via MetaMask.
+          Supports {SUPPORTED_NETWORKS_LABEL} via MetaMask.
         </p>
       </section>
 
@@ -168,7 +175,7 @@ export default function Home() {
         <h2 className="mb-5 text-sm font-semibold uppercase tracking-wider text-zinc-400">
           Network availability
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {NETWORK_STATUS.map((item) => (
             <div
               key={item.network}
@@ -387,7 +394,7 @@ export default function Home() {
           Ready to launch your token?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-300 sm:text-base">
-          Connect MetaMask, select Base Mainnet or Sepolia Testnet, and create your token in a few guided steps.
+          Connect MetaMask, select {SUPPORTED_NETWORKS_LABEL}, and create your token in a few guided steps.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link

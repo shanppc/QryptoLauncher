@@ -3,9 +3,9 @@
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 export const metadata = buildMetadata({
-  title: "About QryptoLauncher — No-Code Token & NFT Deployment on Base",
+  title: "About QryptoLauncher — No-Code Token & NFT Deployment on Base & Arc",
   description:
-    "QryptoLauncher is a non-custodial, no-code platform for deploying ERC20 tokens and ERC721 NFT collections on Base. Learn how it works and why it's built the way it is.",
+    "QryptoLauncher is a non-custodial, no-code platform for deploying ERC20 tokens and ERC721 NFT collections on Base and Arc. Learn how it works and why it's built the way it is.",
   path: "/about",
 });
 
@@ -18,7 +18,7 @@ export default function AboutPage() {
         QryptoLauncher exists to remove the technical wall between a good
         token or NFT idea and a live smart contract. You don't need to know
         Solidity, set up Hardhat, or run an IPFS node — you connect a wallet,
-        fill in a form, and deploy directly to the Base network.
+        fill in a form, and deploy directly to Base or Arc.
       </p>
 
       <h2 className="text-xl font-semibold mt-10 mb-3">Why we built this</h2>
@@ -71,16 +71,16 @@ export default function AboutPage() {
         Every contract deployed through QryptoLauncher is based on
         OpenZeppelin's ERC20 and ERC721 implementations — the same base
         contracts used across most of the Ethereum ecosystem — deployed
-        through factory contracts on Base. NFT collections are automatically
+        through factory contracts on supported networks. NFT collections are automatically
         pinned to IPFS and structured to match the standard metadata schema
         that wallets, marketplaces, and explorers expect.
       </p>
 
       <h2 className="text-xl font-semibold mt-10 mb-3">Where it runs</h2>
       <p className="mb-4 text-slate-300">
-        QryptoLauncher supports Base Mainnet for production deployments and
-        Sepolia Testnet for testing configurations before you spend real
-        gas. You can switch networks from the header at any time.
+        QryptoLauncher supports Base Mainnet and Arc Mainnet for production
+        deployments and Sepolia Testnet for testing configurations before you
+        spend real gas. You can switch networks from the header at any time.
       </p>
 
       <p className="mt-10 text-slate-400 text-sm">

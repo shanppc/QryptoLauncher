@@ -32,6 +32,7 @@ export default function Erc721Page() {
   const contract = erc721Factory(chainId);
   const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId);
   const explorerUrl = chain?.blockExplorers?.default?.url;
+  const nativeSymbol = chain?.nativeCurrency?.symbol ?? "ETH";
   const { ethUsd } = useEthPrice();
 
   // Active Tab: "deploy" | "mint"
@@ -531,10 +532,15 @@ export default function Erc721Page() {
               <span className="font-mono font-medium text-violet-300">
                 {fee !== undefined ? (
                   <>
-                    {formatEther(fee)} ETH
-                    {ethUsd !== null && (
+                    {formatEther(fee)} {nativeSymbol}
+                    {(nativeSymbol === "USDC" || ethUsd !== null) && (
                       <span className="ml-2 text-xs text-zinc-400">
-                        (≈ ${(Number(formatEther(fee)) * ethUsd).toFixed(2)} USD)
+                        (≈ $
+                        {(nativeSymbol === "USDC"
+                          ? Number(formatEther(fee))
+                          : Number(formatEther(fee)) * ethUsd
+                        ).toFixed(2)}{" "}
+                        USD)
                       </span>
                     )}
                   </>

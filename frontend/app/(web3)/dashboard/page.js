@@ -8,7 +8,7 @@ import {
   Erc20TokenAbi,
   Erc721TokenAbi,
 } from "@/lib/contracts";
-import { SUPPORTED_CHAINS } from "@/lib/chains";
+import { SUPPORTED_CHAINS, SUPPORTED_NETWORKS_LABEL } from "@/lib/chains";
 import { Card } from "@/components/ui";
 
 // Per-item fields we batch through multicall
@@ -189,7 +189,7 @@ export default function DashboardPage() {
       <Card>
         <p className="text-sm text-amber-300">
           This network isn&apos;t supported. Switch to{" "}
-          {SUPPORTED_CHAINS[0].name} using the selector in the header.
+          {SUPPORTED_NETWORKS_LABEL} using the selector in the header.
         </p>
       </Card>
     );

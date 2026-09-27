@@ -2,9 +2,9 @@
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 export const metadata = buildMetadata({
-  title: "Launch ERC20 Token on Base — QryptoLauncher",
+  title: "Launch ERC20 Token on Base & Arc — QryptoLauncher",
   description:
-    "Deploy your custom ERC20 token on Base Mainnet or Sepolia Testnet without code. Initial supply is minted directly to your wallet.",
+    "Deploy your custom ERC20 token on Base, Arc, or Sepolia without code. Initial supply is minted directly to your wallet.",
   path: "/erc20",
 });
 

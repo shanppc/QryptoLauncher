@@ -48,7 +48,7 @@ export default function PrivacyPage() {
             <li>
               <strong>Onchain transaction data:</strong> Any transaction
               you sign (deployments, mints, transfers) is broadcast to a
-              public blockchain (Base or Sepolia) and is permanently
+              public blockchain (Base, Arc, or Sepolia) and is permanently
               visible to anyone, independent of QryptoLauncher.
             </li>
             <li>
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong>Blockchain RPC providers</strong> (e.g. Alchemy) —
-              used to read and submit onchain data for Base and Sepolia.
+              used to read and submit onchain data for Base, Arc, and Sepolia.
             </li>
             <li>
               <strong>Hosting/analytics provider</strong> (e.g. Vercel) —

@@ -6,7 +6,7 @@ import { blogPosts } from "./posts";
 export const metadata = buildMetadata({
   title: "Blog — QryptoLauncher",
   description:
-    "Guides and updates on deploying ERC20 tokens and ERC721 NFT collections on Base, IPFS metadata, wallet security, and building on QryptoLauncher.",
+    "Guides and updates on deploying ERC20 tokens and ERC721 NFT collections on Base and Arc, IPFS metadata, wallet security, and building on QryptoLauncher.",
   path: "/blog",
 });
 
@@ -15,7 +15,7 @@ export default function BlogIndexPage() {
     <main className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-3xl font-bold mb-6">QryptoLauncher Blog</h1>
       <p className="mb-10 text-slate-300">
-        Guides and notes on deploying tokens and NFT collections on Base,
+        Guides and notes on deploying tokens and NFT collections on Base and Arc,
         onchain metadata, and building safely with no-code tools.
       </p>
       <div className="space-y-10">

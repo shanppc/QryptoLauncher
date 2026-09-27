@@ -12,11 +12,11 @@ export const metadata = buildMetadata({
 const faqs = [
   {
     q: "What is QryptoLauncher?",
-    a: "QryptoLauncher is a no-code web application for deploying ERC20 tokens and ERC721 NFT collections on Base. You configure your contract in a browser form, connect a wallet, and deploy directly onchain — no Solidity or deployment tooling required.",
+    a: "QryptoLauncher is a no-code web application for deploying ERC20 tokens and ERC721 NFT collections on Base and Arc. You configure your contract in a browser form, connect a wallet, and deploy directly onchain — no Solidity or deployment tooling required.",
   },
   {
     q: "Do I need to know how to code?",
-    a: "No. The entire flow — token or collection setup, image uploads, metadata generation, and deployment — is handled through the interface. You only need a browser wallet and enough ETH on Base to cover gas and the protocol fee.",
+    a: "No. The entire flow — token or collection setup, image uploads, metadata generation, and deployment — is handled through the interface. You only need a browser wallet and enough native gas on your chosen network to cover gas and the protocol fee.",
   },
   {
     q: "Does QryptoLauncher take custody of my tokens or collection?",
@@ -28,11 +28,11 @@ const faqs = [
   },
   {
     q: "Which networks are supported?",
-    a: "Base Mainnet for live deployments, and Sepolia Testnet for testing your configuration before spending real funds. You can switch networks from the header at any time.",
+    a: "Base Mainnet and Arc Mainnet for live deployments, and Sepolia Testnet for testing your configuration before spending real funds. You can switch networks from the header at any time.",
   },
   {
     q: "What wallet do I need?",
-    a: "QryptoLauncher currently supports MetaMask as a browser-injected wallet provider. Make sure it's installed and set to the correct network (Base Mainnet or Sepolia) before deploying.",
+    a: "QryptoLauncher currently supports MetaMask as a browser-injected wallet provider. Make sure it's installed and set to the correct network (Base, Arc, or Sepolia) before deploying.",
   },
   {
     q: "How is NFT metadata and image storage handled?",
@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: "Are the smart contracts audited or verified?",
-    a: "The factory contracts are built on OpenZeppelin's audited ERC20 and ERC721 base implementations and are deployed and verified on Basescan and Etherscan, so you can review the exact bytecode and source before interacting with them. Contract addresses are listed in the project's GitHub repository.",
+    a: "The factory contracts are built on OpenZeppelin's audited ERC20 and ERC721 base implementations and are deployed and verified on supported block explorers (Basescan, Etherscan, and Arc Explorer), so you can review the exact bytecode and source before interacting with them. Contract addresses are listed in the project's GitHub repository.",
   },
   {
     q: "Can I mint more NFTs after deploying a collection?",
@@ -48,7 +48,7 @@ const faqs = [
   },
   {
     q: "Where can I see everything I've deployed?",
-    a: "The dashboard indexes all tokens and collections deployed from your connected wallet, with direct links to view each contract on Basescan or Etherscan.",
+    a: "The dashboard indexes all tokens and collections deployed from your connected wallet, with direct links to view each contract on the network explorer.",
   },
   {
     q: "Is deploying a token or NFT collection reversible?",
